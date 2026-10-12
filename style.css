@@ -1,0 +1,12 @@
+ul {
+    border-left:1px solid #000000; /*線の設定*/
+    //padding:2px 11px; /*余白の設定*/
+}
+
+ul {
+    list-style-type: disc; /* 点をdiscにする */
+}
+
+li {
+    list-style-type: disc; /* リストアイテムの点をdiscにする */
+}
