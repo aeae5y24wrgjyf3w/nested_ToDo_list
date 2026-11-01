@@ -1,3 +1,12 @@
+body {
+    background-color: #e0e0e0;
+}
+
+.fixed-header {
+  position: sticky;
+  top: 0;
+}
+
 ul {
     border-left:1px solid #000000; /*線の設定*/
     //padding:2px 11px; /*余白の設定*/
