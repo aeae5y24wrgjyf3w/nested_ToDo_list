@@ -1,4 +1,4 @@
-let editing=0;
+let editing=false;
 let visualize_closed=false;
 let tree = [{parent_id:0,now:0,content:"",closed:false}];
 let edited=false;
@@ -17,13 +17,15 @@ window.addEventListener("beforeunload", (event) => {
 //新しい項目ボタンが押された時のイベントリスナー
 document.querySelector("#new_task").addEventListener("click", () => {
     event.stopPropagation();
-    add_task(document.querySelector("#_0"));
+    if(editing===false)
+    {add_task(document.querySelector("#_0"));}
 });
 
 //再表示ボタンが押された時のイベントリスナー
 document.querySelector("#reprint").addEventListener("click", () => {
     event.stopPropagation();
-    parse_tree();
+    if(editing===false)
+    {parse_tree();}
 });
 
 //ファイル取込ボタンが押された時のイベントリスナー
@@ -91,9 +93,9 @@ vc.addEventListener('click', () => {
 function colorize_task(task){
     let a=get_tree_item(task);
     if(a.closed===true){
-        task.querySelector("span").style.backgroundColor='#c0c0c0';
-    }else{
         task.querySelector("span").style.backgroundColor='';
+    }else{
+        task.querySelector("span").style.backgroundColor='#ffffff';
     }
 }
 
@@ -126,6 +128,7 @@ function parse_tree(){
                 }
                 task.querySelector("ul").appendChild(root.removeChild(root.children[j]));
                 --len;
+                --j;
             }
         }
         if(visualize_closed === false && tree[i].closed === true && task.querySelector("ul")=== null){root.removeChild(task);}
@@ -180,7 +183,7 @@ function create_form(parent, task, parent_id){
             task.remove();
         }
         //編集モード終了
-        editing=0;
+        editing=false;
 
     });
 
@@ -194,7 +197,7 @@ function create_form(parent, task, parent_id){
         event.stopPropagation();
         task.remove();
         //編集モード終了
-        editing=0;
+        editing=false;
     });
     
     if(parent_id!==0){
@@ -217,7 +220,7 @@ function create_form(parent, task, parent_id){
             task.remove();
             colorize_task(parent);
             //編集モード終了
-            editing=0;
+            editing=false;
             edited=true;
         });
     }
@@ -228,7 +231,7 @@ function add_task(parent){
     if(editing)return;
 
     //編集モードに遷移
-    editing = 1;
+    editing = true;
 
     let child=new_child(parent,tree.length)
     //フォームを作る。
